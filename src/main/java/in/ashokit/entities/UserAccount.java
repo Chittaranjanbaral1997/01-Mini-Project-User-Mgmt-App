@@ -4,7 +4,9 @@ import java.time.LocalDate;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,18 +17,28 @@ public class UserAccount {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer userId;
+	
 	private String fullName;
+	
 	private String email;
+	
 	private Long phno;
+	
 	private String gender;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dob;
+	
 	private Long ssn;
-	private String activeSw="Y";
+	
+	private String activeSw;
 	
 	@CreationTimestamp
+	@Column(updatable = false)
 	private LocalDate createdDate;
 	
 	@UpdateTimestamp
+	@Column(insertable = false)
 	private LocalDate updatedDate;
 
 	public Integer getUserid() {

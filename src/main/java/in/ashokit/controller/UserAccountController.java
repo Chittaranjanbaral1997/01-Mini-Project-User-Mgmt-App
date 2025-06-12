@@ -27,10 +27,10 @@ public class UserAccountController {
 	
 	@PostMapping("/save-user")
 	public String handleSubmitBtn(@ModelAttribute("user") UserAccount user,Model model) {
-		System.out.println(user);
 		// TODO : save form data in database
 		String msg = userAccountService.saveOrUpdateUserAcc(user);
 		model.addAttribute("msg",msg);
+		model.addAttribute("user",new UserAccount());
 		return "index";
 	}
 	
@@ -49,17 +49,22 @@ public class UserAccountController {
 	}
 	
 	@GetMapping("/delete")
-	public String deleteUser(@RequestParam("id") Integer id) {
+	public String deleteUser(@RequestParam("id") Integer id ,Model model) {
 	    userAccountService.deleteUserAcc(id);
-		return "redirect:/users";
+	    model.addAttribute("msg","User Record is Deleted!!!");
+		return "forward:/users";
 	}
 	
 	@GetMapping("/update")
 	public String statusUpdate(@RequestParam("id") Integer id,
-			                   @RequestParam("status") String status) {
+			                   @RequestParam("status") String status,Model model) {
 		userAccountService.updateUserAccStatus(id, status);
-		
-		return"redirect:/users";
+		if ("Y".equals(status)) {
+			model.addAttribute("msg","User Account Activated");
+		}else {
+			model.addAttribute("msg","User Account De-Activated"); 
+		}
+		return"forward:/users";
 	}
 	
 	
