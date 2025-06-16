@@ -1,1 +1,5 @@
+
 String name="Ashokit";
+
+int i =10;
+
